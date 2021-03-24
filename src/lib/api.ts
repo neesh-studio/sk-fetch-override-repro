@@ -18,6 +18,7 @@ export function buildQuery(queryString) {
 
 export const query = async function (queryString, fetchApi) {
   const { url, options } = buildQuery(queryString);
+  //   if (typeof window !== "undefined") fetchApi = fetch;
   const rawResp = await fetchApi(url, options);
   let resp = await rawResp.json();
   // console.debug(parsedResp);
