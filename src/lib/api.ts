@@ -21,8 +21,7 @@ export const query = async function (queryString, fetchApi) {
   //   if (typeof window !== "undefined") fetchApi = fetch;
   const rawResp = await fetchApi(url, options);
   let resp = await rawResp.json();
-  // console.debug(parsedResp);
-  // console.log("query response", { query: queryString }, resp, resp);
+  // console.log("query response", { query: queryString }, resp);
   if (resp.errors) {
     console.error("error requesting", resp);
   } else {
@@ -43,34 +42,12 @@ export const query = async function (queryString, fetchApi) {
   }
 };
 
-const mediaFragment = `#graphql
-  media {
-    ...on upload_Asset {
-      kind
-      title
-      url
-      copyright
-      width
-      height
-    }
-  }
-`;
-
 export const getFestival = (lang, slug) => `#graphql
   query {
     entry(type: "festival", site: "${lang}", slug: "${slug}"){
       ...on festival_festival_Entry {
         title
-        infoText
-        visitDetails
-        ${mediaFragment}
-        artists {
-          ...on artist_artist_Entry {
-            title
-            infoText
-            ${mediaFragment}
-          }
-        }
+        
       }
     }
   }
